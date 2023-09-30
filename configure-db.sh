@@ -23,4 +23,5 @@ echo "======= MSSQL SERVER STARTED ========" | tee -a ./config.log
 echo "======= CREATING TABLES ========" | tee -a ./config.log
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create_tables.sql
 
+# Log final message
 echo "======= MSSQL CONFIG COMPLETE =======" | tee -a ./config.log
