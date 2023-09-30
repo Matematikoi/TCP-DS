@@ -2,13 +2,15 @@ FROM mcr.microsoft.com/mssql/server:2017-CU30-ubuntu-18.04
 
 # Create a config directory
 RUN mkdir -p /usr/config
+RUN mkdir -p /usr/config/tmp_data
 WORKDIR /usr/config
 
 # Bundle config source
 COPY ./configure-db.sh /usr/config
 COPY ./entrypoint.sh /usr/config
 COPY ./setup.sql /usr/config
-COPY ./create-tables.sql /usr/config
+COPY ./create_tables.sql /usr/config
+COPY ./tmp_data /usr/config/tmp_data
 
 # Grant permissions for to our scripts to be executable
 RUN chmod +x /usr/config/entrypoint.sh
