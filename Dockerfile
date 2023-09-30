@@ -11,6 +11,8 @@ COPY ./entrypoint.sh /usr/config
 COPY ./setup.sql /usr/config
 COPY ./create_tables.sql /usr/config
 COPY ./tmp_data /usr/config/tmp_data
+COPY ./upload-data.sql /usr/config/upload-data.sql
+COPY ./create-index.sql /usr/config/create-index.sql
 
 # Grant permissions for to our scripts to be executable
 RUN chmod +x /usr/config/entrypoint.sh
