@@ -28,11 +28,17 @@ The docker is a copy of [https://github.com/mcmoe/mssqldocker](Morgan Kobeissi) 
 You can run it with 
 
 ```
-docker-compose up --build --force-recreate --no-deps 
+docker-compose up
 ```
+
 
 # Creating the files
 you can create the files with
 ```
 ./dsdgen -scale 1 -dir ../tmp_data
 ```
+
+# References
+1. For fixing the query templates problem we used https://github.com/gregrahn/tpcds-kit/issues/36
+1. For populating the database, creating the tables and creating indexes we used https://github.com/microsoft/dsb
+1. For docker we use https://github.com/mcmoe/mssqldocker

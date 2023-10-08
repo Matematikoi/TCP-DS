@@ -23,12 +23,7 @@ echo "======= MSSQL SERVER STARTED ========" | tee -a ./config.log
 echo "======= CREATING TABLES ========" | tee -a ./config.log
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create_tables.sql
 
-
-# Upsert the data
-echo "======= UPLOADING DATA ========" | tee -a ./config.log
-/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i upload-data.sql
-
-# Upsert the data
+# Creating Indexes
 echo "======= CREATING INDEXES ========" | tee -a ./config.log
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create-index.sql
 
