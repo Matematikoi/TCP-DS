@@ -38,6 +38,14 @@ you can create the files with
 ./dsdgen -scale 1 -dir ../tmp_data
 ```
 
+# Python
+You will run create a virtual environment for python 3.11
+```
+python3 -m venv tcpds 
+source tcpds/bin/activate
+```
+
+
 # References
 1. For fixing the query templates problem we used https://github.com/gregrahn/tpcds-kit/issues/36
 1. For populating the database, creating the tables and creating indexes we used https://github.com/microsoft/dsb
