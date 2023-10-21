@@ -19,3 +19,8 @@ awk '/-- end query ..? in stream . using template query..?.tpl/{c++; next} {prin
 awk '/-- end query ..? in stream . using template query..?.tpl/{c++; next} {print > ("cut_query_3_"(c+1)".sql")}' query_3.sql
 awk '/-- end query ..? in stream . using template query..?.tpl/{c++; next} {print > ("cut_query_4_"(c+1)".sql")}' query_4.sql
 awk '/-- end query ..? in stream . using template query..?.tpl/{c++; next} {print > ("cut_query_5_"(c+1)".sql")}' query_5.sql
+
+echo ============= COPYING DATA INTO DOCKER =============
+cd ..
+docker exec mssqldev rm -rf /usr/config/tmp_queries
+docker cp ./tmp_queries mssqldev:/usr/config/tmp_queries
