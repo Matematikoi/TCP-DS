@@ -1,5 +1,3 @@
-define _END = "-- end query " + [_QUERY] + " in stream " + [_STREAM] + " using template " + [_TEMPLATE];
-define _BEGIN = "-- start query " + [_QUERY] + " in stream " + [_STREAM] + " using template " + [_TEMPLATE];
 --
 -- Legal Notice 
 -- 
@@ -35,7 +33,6 @@ define _BEGIN = "-- start query " + [_QUERY] + " in stream " + [_STREAM] + " usi
 -- Contributors:
 -- 
  define YEAR=random(1998,2001,uniform);
- 
   
  with wscs as
  (select sold_date_sk
