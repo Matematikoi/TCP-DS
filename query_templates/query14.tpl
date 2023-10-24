@@ -36,10 +36,8 @@
  define DAY = random(1,28,uniform);
  define _LIMIT=100; 
 
-with  cross_items as
- (select i_item_sk ss_item_sk
- from item,
- (select iss.i_brand_id brand_id
+with  foo as (
+  select iss.i_brand_id brand_id
      ,iss.i_class_id class_id
      ,iss.i_category_id category_id
  from store_sales
@@ -68,6 +66,9 @@ with  cross_items as
  where ws_item_sk = iws.i_item_sk
    and ws_sold_date_sk = d3.d_date_sk
    and d3.d_year between [YEAR] AND [YEAR] + 2)
+,cross_items as
+ (select i_item_sk ss_item_sk
+ from item, foo
  where i_brand_id = brand_id
       and i_class_id = class_id
       and i_category_id = category_id
