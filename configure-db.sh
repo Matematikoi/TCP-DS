@@ -24,8 +24,8 @@ echo "======= CREATING TABLES ========" | tee -a ./config.log
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create_tables.sql
 
 # Creating Indexes
-echo "======= CREATING INDEXES ========" | tee -a ./config.log
-/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create-index.sql
+#echo "======= CREATING INDEXES ========" | tee -a ./config.log
+#/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $SA_PASSWORD -d master -i create-index.sql
 
 
 # Log final message

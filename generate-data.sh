@@ -16,4 +16,8 @@ docker exec mssqldev find tmp_data -name *dat -exec bash -c 'sed -i 's/.$//' "$1
 echo ============= INSERTING DATA INTO SQL SERVER =============
 docker exec mssqldev /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 2astazeY -d master -i upload-data.sql
 
+
+echo ============= CREATING INDEXES =============
+docker exec mssqldev /opt/mssql-tools/bin/sqlcmd -S localhost -U datawarehouse -P 7ellowEl7akey -d master -i create-index.sql
+
 echo ============= DATA LOADED =============

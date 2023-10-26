@@ -30,13 +30,16 @@ def main() -> int:
             start = timer()
             is_it_ok = run_query(query_number,query_batch)
             end = timer()
-            information.append({
+            data = {
                 'time': end-start,
                 'query_batch': query_batch,
                 'query_number': query_number,
                 'query_template': query_template,
                 'working': is_it_ok 
-            })
+            }
+
+            information.append(data)
+            print(data)
             
     with open("experiment_run.csv", "w") as f:
         wr = csv.DictWriter(f, delimiter=",",fieldnames=list(information[0].keys()))
