@@ -43,12 +43,12 @@
         avg(ss_list_price) agg2,
         avg(ss_coupon_amt) agg3,
         avg(ss_sales_price) agg4 
- from store_sales, customer_demographics, date_dim, item, promotion
- where ss_sold_date_sk = d_date_sk and
-       ss_item_sk = i_item_sk and
-       ss_cdemo_sk = cd_demo_sk and
-       ss_promo_sk = p_promo_sk and
-       cd_gender = '[GEN]' and 
+ from store_sales WITH (FORCESCAN) 
+ inner join customer_demographics on ss_cdemo_sk = cd_demo_sk
+ inner join date_dim on ss_sold_date_sk = d_date_sk
+ inner join item on ss_item_sk = i_item_sk
+ inner join promotion on ss_promo_sk = p_promo_sk
+ where cd_gender = '[GEN]' and 
        cd_marital_status = '[MS]' and
        cd_education_status = '[ES]' and
        (p_channel_email = 'N' or p_channel_event = 'N') and

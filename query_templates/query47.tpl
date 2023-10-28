@@ -54,12 +54,47 @@
  from item, store_sales, date_dim, store
  where ss_item_sk = i_item_sk and
        ss_sold_date_sk = d_date_sk and
-       ss_store_sk = s_store_sk and
-       (
-         d_year = [YEAR] or
-         ( d_year = [YEAR]-1 and d_moy =12) or
-         ( d_year = [YEAR]+1 and d_moy =1)
-       )
+       ss_store_sk = s_store_sk and d_year = [YEAR]
+ group by i_category, i_brand,
+          s_store_name, s_company_name,
+          d_year, d_moy
+UNION
+ select i_category, i_brand,
+        s_store_name, s_company_name,
+        d_year, d_moy,
+        sum(ss_sales_price) sum_sales,
+        avg(sum(ss_sales_price)) over
+          (partition by i_category, i_brand,
+                     s_store_name, s_company_name, d_year)
+          avg_monthly_sales,
+        rank() over
+          (partition by i_category, i_brand,
+                     s_store_name, s_company_name
+           order by d_year, d_moy) rn
+ from item, store_sales, date_dim, store
+ where ss_item_sk = i_item_sk and
+       ss_sold_date_sk = d_date_sk and
+       ss_store_sk = s_store_sk and d_year = [YEAR]-1 and d_moy =12
+ group by i_category, i_brand,
+          s_store_name, s_company_name,
+          d_year, d_moy
+UNION
+ select i_category, i_brand,
+        s_store_name, s_company_name,
+        d_year, d_moy,
+        sum(ss_sales_price) sum_sales,
+        avg(sum(ss_sales_price)) over
+          (partition by i_category, i_brand,
+                     s_store_name, s_company_name, d_year)
+          avg_monthly_sales,
+        rank() over
+          (partition by i_category, i_brand,
+                     s_store_name, s_company_name
+           order by d_year, d_moy) rn
+ from item, store_sales, date_dim, store
+ where ss_item_sk = i_item_sk and
+       ss_sold_date_sk = d_date_sk and
+       ss_store_sk = s_store_sk and d_year = [YEAR]+1 and d_moy =1
  group by i_category, i_brand,
           s_store_name, s_company_name,
           d_year, d_moy),
