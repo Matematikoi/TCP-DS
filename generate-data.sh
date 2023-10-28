@@ -3,9 +3,9 @@
 echo RESULTS:> etl_times.log
 echo ============= GENERATING DATA =============
 start_time=`date +%s`
-#rm tmp_data/*
+rm tmp_data/*
 cd tools || exit 1
-#./dsdgen -scale $1 -dir ../tmp_data 
+./dsdgen -scale $1 -dir ../tmp_data 
 cd ..
 end_time=`date +%s`
 echo GENERATING DATA: `expr $end_time - $start_time` s. >> etl_times.log
@@ -45,5 +45,3 @@ end_time=`date +%s`
 echo CREATING USEFUL TABLES: `expr $end_time - $start_time` s. >> etl_times.log
 
 echo ============= DATA LOADED =============
-
-#python time_queries.py
