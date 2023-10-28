@@ -117,33 +117,14 @@ union all
                  ,t_s_secyear.customer_first_name
                  ,t_s_secyear.customer_last_name
                  ,[SELECTONE]
- from year_total t_s_firstyear
-     ,year_total t_s_secyear
-     ,year_total t_c_firstyear
-     ,year_total t_c_secyear
-     ,year_total t_w_firstyear
-     ,year_total t_w_secyear
- where t_s_secyear.customer_id = t_s_firstyear.customer_id
-   and t_s_firstyear.customer_id = t_c_secyear.customer_id
-   and t_s_firstyear.customer_id = t_c_firstyear.customer_id
-   and t_s_firstyear.customer_id = t_w_firstyear.customer_id
-   and t_s_firstyear.customer_id = t_w_secyear.customer_id
-   and t_s_firstyear.sale_type = 's'
-   and t_c_firstyear.sale_type = 'c'
-   and t_w_firstyear.sale_type = 'w'
-   and t_s_secyear.sale_type = 's'
-   and t_c_secyear.sale_type = 'c'
-   and t_w_secyear.sale_type = 'w'
-   and t_s_firstyear.dyear =  [YEAR]
-   and t_s_secyear.dyear = [YEAR]+1
-   and t_c_firstyear.dyear =  [YEAR]
-   and t_c_secyear.dyear =  [YEAR]+1
-   and t_w_firstyear.dyear = [YEAR]
-   and t_w_secyear.dyear = [YEAR]+1
-   and t_s_firstyear.year_total > 0
-   and t_c_firstyear.year_total > 0
-   and t_w_firstyear.year_total > 0
-   and case when t_c_firstyear.year_total > 0 then t_c_secyear.year_total / t_c_firstyear.year_total else null end
+ from (select * from year_total where sale_type='s' and dyear = 2000 ) t_s_firstyear 
+    inner join (select * from year_total where sale_type='s' and dyear = 2000+1) t_s_secyear on t_s_secyear.customer_id = t_s_firstyear.customer_id 
+    inner join (select * from year_total where sale_type='c' and dyear = 2000) t_c_firstyear on t_s_firstyear.customer_id = t_c_firstyear.customer_id 
+    inner join (select * from year_total where sale_type='c' and dyear = 2000+1) t_c_secyear on t_s_firstyear.customer_id = t_c_secyear.customer_id 
+    inner join (select * from year_total where sale_type='w' and dyear = 2000) t_w_firstyear on t_s_firstyear.customer_id = t_w_firstyear.customer_id
+    inner join (select * from year_total where sale_type='w' and dyear = 2000+1 ) t_w_secyear on t_s_firstyear.customer_id = t_w_secyear.customer_id
+ where 
+  case when t_c_firstyear.year_total > 0 then t_c_secyear.year_total / t_c_firstyear.year_total else null end
            > case when t_s_firstyear.year_total > 0 then t_s_secyear.year_total / t_s_firstyear.year_total else null end
    and case when t_c_firstyear.year_total > 0 then t_c_secyear.year_total / t_c_firstyear.year_total else null end
            > case when t_w_firstyear.year_total > 0 then t_w_secyear.year_total / t_w_firstyear.year_total else null end
