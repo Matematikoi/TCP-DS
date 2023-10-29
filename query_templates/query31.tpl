@@ -36,18 +36,6 @@
  define AGG= text({"ss1.ca_county",1},{"ss1.d_year",1},{"web_q1_q2_increase",1},{"store_q1_q2_increase",1},{"web_q2_q3_increase",1},{"store_q2_q3_increase",1}); 
 
 
- with ss as
- (select ca_county,d_qoy, d_year,sum(ss_ext_sales_price) as store_sales
- from store_sales,date_dim,customer_address
- where ss_sold_date_sk = d_date_sk
-  and ss_addr_sk=ca_address_sk
- group by ca_county,d_qoy, d_year),
- ws as
- (select ca_county,d_qoy, d_year,sum(ws_ext_sales_price) as web_sales
- from web_sales,date_dim,customer_address
- where ws_sold_date_sk = d_date_sk
-  and ws_bill_addr_sk=ca_address_sk
- group by ca_county,d_qoy, d_year)
  select 
         ss1.ca_county
        ,ss1.d_year
@@ -56,12 +44,12 @@
        ,ws3.web_sales/ws2.web_sales web_q2_q3_increase
        ,ss3.store_sales/ss2.store_sales store_q2_q3_increase
  from
-        ss ss1
-       ,ss ss2
-       ,ss ss3
-       ,ws ws1
-       ,ws ws2
-       ,ws ws3
+        query_31_ss ss1
+       ,query_31_ss ss2
+       ,query_31_ss ss3
+       ,query_31_ws ws1
+       ,query_31_ws ws2
+       ,query_31_ws ws3
  where
     ss1.d_qoy = 1
     and ss1.d_year = [YEAR]
