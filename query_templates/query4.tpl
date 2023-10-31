@@ -117,12 +117,12 @@ union all
                  ,t_s_secyear.customer_first_name
                  ,t_s_secyear.customer_last_name
                  ,[SELECTONE]
- from (select * from year_total where sale_type='s' and dyear = 2000 ) t_s_firstyear 
-    inner join (select * from year_total where sale_type='s' and dyear = 2000+1) t_s_secyear on t_s_secyear.customer_id = t_s_firstyear.customer_id 
-    inner join (select * from year_total where sale_type='c' and dyear = 2000) t_c_firstyear on t_s_firstyear.customer_id = t_c_firstyear.customer_id 
-    inner join (select * from year_total where sale_type='c' and dyear = 2000+1) t_c_secyear on t_s_firstyear.customer_id = t_c_secyear.customer_id 
-    inner join (select * from year_total where sale_type='w' and dyear = 2000) t_w_firstyear on t_s_firstyear.customer_id = t_w_firstyear.customer_id
-    inner join (select * from year_total where sale_type='w' and dyear = 2000+1 ) t_w_secyear on t_s_firstyear.customer_id = t_w_secyear.customer_id
+ from (select * from year_total where sale_type='s' and dyear = [YEAR] ) t_s_firstyear 
+    inner join (select * from year_total where sale_type='s' and dyear = [YEAR]+1) t_s_secyear on t_s_secyear.customer_id = t_s_firstyear.customer_id 
+    inner join (select * from year_total where sale_type='c' and dyear = [YEAR]) t_c_firstyear on t_s_firstyear.customer_id = t_c_firstyear.customer_id 
+    inner join (select * from year_total where sale_type='c' and dyear = [YEAR]+1) t_c_secyear on t_s_firstyear.customer_id = t_c_secyear.customer_id 
+    inner join (select * from year_total where sale_type='w' and dyear = [YEAR]) t_w_firstyear on t_s_firstyear.customer_id = t_w_firstyear.customer_id
+    inner join (select * from year_total where sale_type='w' and dyear = [YEAR]+1 ) t_w_secyear on t_s_firstyear.customer_id = t_w_secyear.customer_id
  where 
   case when t_c_firstyear.year_total > 0 then t_c_secyear.year_total / t_c_firstyear.year_total else null end
            > case when t_s_firstyear.year_total > 0 then t_s_secyear.year_total / t_s_firstyear.year_total else null end
