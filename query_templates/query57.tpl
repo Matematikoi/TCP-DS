@@ -52,7 +52,7 @@
           (partition by i_category, i_brand,
                      cc_name
            order by d_year, d_moy) rn
- from item, catalog_sales, date_dim, call_center
+ from item, catalog_sales WITH (FORCESCAN), date_dim, call_center
  where cs_item_sk = i_item_sk and
        cs_sold_date_sk = d_date_sk and
        cc_call_center_sk= cs_call_center_sk and
